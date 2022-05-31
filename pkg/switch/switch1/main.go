@@ -13,7 +13,7 @@ const (
 	ERROR
 )
 
-// 从上到下逐个比较，执行第一个等于待比较值的 case 分支。
+// 从上到下逐个比较，执行第一个等于 switch 表达式的 case 分支。
 func (s State) String() string {
 	switch s {
 	case PENDING:
