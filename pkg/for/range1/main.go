@@ -1,4 +1,4 @@
-// 可以使用 range 进行迭代的数据结构包括：array, string, slice, map, chan
+// 可以使用 range 进行迭代的数据结构包括：array, array指针, string, slice, map, chan
 package main
 
 import (
