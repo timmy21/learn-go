@@ -7,7 +7,7 @@ import (
 	"time"
 )
 
-// 支持高阶函数的用法，函数可以作为其他函数的参数，和返回值
+// 支持高阶函数的用法，函数可以作为参数和返回值使用
 func filter(nums []int, fn func(int) bool) []int {
 	var result []int
 	for _, num := range nums {
@@ -18,7 +18,7 @@ func filter(nums []int, fn func(int) bool) []int {
 	return result
 }
 
-// 可以自定义函数类型
+// 用户自定义函数类型
 type FilterFunc func(int) bool
 
 func (f FilterFunc) Filter(nums []int) []int {

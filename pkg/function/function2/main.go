@@ -19,9 +19,9 @@ func double2(nums []int) {
 func main() {
 	nums1 := [3]int{1, 2, 3}
 	double1(nums1)
-	fmt.Println(nums1) // output: [1 2 3]
+	fmt.Println(nums1) // Output: [1 2 3]
 
 	nums2 := []int{1, 2, 3}
 	double2(nums2)
-	fmt.Println(nums2) // output: [2 4 6]
+	fmt.Println(nums2) // Output: [2 4 6]
 }

@@ -34,8 +34,9 @@ func sum2(nums []int) int {
 func sum3(nums []int) int {
 	var s int
 
-	// 这通常会被认为是一个 Go 语言的陷阱
 	// 通过 sum2 描述可以得出，其实在整个循环中使用的是同一个 v 变量
+	// 这通常会被认为是一个 Go 语言的陷阱，就算知道这个陷阱并且经验丰富，但依然可能犯错。
+	// 这个陷阱还有一种场景情况是：在循环体内，通过闭包捕获值变量。
 	var copyed []*int
 	for _, v := range nums {
 		copyed = append(copyed, &v)
@@ -67,9 +68,9 @@ func sum5(nums <-chan int) int {
 }
 
 func main() {
-	fmt.Println(sum1([]int{1, 2, 3, 4, 5})) // output: 15
-	fmt.Println(sum2([]int{1, 2, 3, 4, 5})) // output: 15
-	fmt.Println(sum3([]int{1, 2, 3, 4, 5})) // output: 25
+	fmt.Println(sum1([]int{1, 2, 3, 4, 5})) // Output: 15
+	fmt.Println(sum2([]int{1, 2, 3, 4, 5})) // Output: 15
+	fmt.Println(sum3([]int{1, 2, 3, 4, 5})) // Output: 25
 
 	m := map[string]int{
 		"zero":  0,
