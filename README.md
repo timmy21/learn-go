@@ -16,3 +16,7 @@
 * [工具链](pkg/toolchain/README.md)
 * [日志处理](pkg/log/README.md)
 * [性能分析](pkg/pprof/README.md)
+
+## 推荐阅读
+
+* [Effective Go](https://go.dev/doc/effective_go)

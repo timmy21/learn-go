@@ -1,4 +1,4 @@
-// 字符串就是一个只读的字节切片
+// 字符串实际就是一个只读的字节数组
 package main
 
 import (
@@ -13,7 +13,7 @@ import (
 // 	len int
 // }
 
-// 字符串作为参数传递时，拷贝的是 "string header"（大小为 2 word，64位机器是16字节）
+// 字符串作为参数传递时，拷贝的是 "string header"（大小为 2-word，64位机器是16字节）
 func toUpper(s string) string {
 	r := make([]byte, len(s))
 	for i, b := range []byte(s) {
@@ -23,7 +23,10 @@ func toUpper(s string) string {
 			r[i] = b
 		}
 	}
-	// 不管是 []byte(s) 还是 string(r) 都会发生底层字节数组的拷贝
+	// 不管是 []byte(string) 还是 string([]byte) 都会发生底层字节数组的拷贝
+	// 因为 []byte 是可变的，而 string 是不可变的。所以他们不能共享底层字节数组
+	// 但是在某些场景下，Go 编译器做些优化。
+	//   比如：上面的 "for i, b := range []byte(s)" 就不会进行底层字节数组的拷贝
 	return string(r)
 }
 
@@ -49,7 +52,7 @@ func main() {
 	s2 := s1[:5]
 	fmt.Println(s2)
 
-	// 截取部分字符串是非常高效的，底层共享同一个字节数组
+	// 截取部分字符串是非常高效的，不会发生拷贝，而是共享同一个底层字节数组
 	h1 := (*reflect.StringHeader)(unsafe.Pointer(&s1))
 	h2 := (*reflect.StringHeader)(unsafe.Pointer(&s2))
 	fmt.Printf("s1: %#x s2: %#x", h1.Data, h2.Data)

@@ -1,9 +1,7 @@
 // 在 Go 语言中直接使用数组的情况并不多，更常用的数据结构是切片，即动态数组。
 package main
 
-import (
-	"fmt"
-)
+import "fmt"
 
 // https://github.com/golang/go/blob/master/src/runtime/slice.go#L15
 // slice 运行时数据结构如下:
@@ -21,7 +19,7 @@ import (
 //   4. 如果最终容量（cap）计算值溢出，则最终容量（cap）就是新申请容量（cap）
 // 不同Go版本扩容规则可能会发生变化，具体请查看：https://github.com/golang/go/blob/master/src/runtime/slice.go#L178
 func concat(a, b []int) []int {
-	// slice 作为参数传递时，拷贝的是 "slice header"（大小为 3 word，64位机器是24字节），而不会拷贝底层的数组。
+	// slice 作为参数传递时，拷贝的是 "slice header"（大小为 3-word，64位机器是24字节），而不会拷贝底层的数组。
 	return append(a, b...)
 }
 
