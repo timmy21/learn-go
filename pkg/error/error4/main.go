@@ -12,13 +12,6 @@ import (
 
 const maxUint64 = 1<<64 - 1
 
-/*
-自定义错误类型，需要实现 error 接口
-
-type error interface {
-	Error() string
-}
-*/
 type SyntaxError struct {
 	Num string
 }
