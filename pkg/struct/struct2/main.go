@@ -52,7 +52,7 @@ func main() {
 		Salary: 10000,
 	}
 	fmt.Println(e.Person.Name())
-	fmt.Println(e.Name()) // 语法糖
+	fmt.Println(e.Name()) // 等价于 e.Person.Name()
 
 	// 等价于 e.Person.SetAddress(...)
 	e.SetAddress(Address{City: "Beijing", Addr: "xxxxxx"})
