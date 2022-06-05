@@ -1,3 +1,4 @@
+// Go 仅支持组合，不支持继承。为了让组合更加方便和有用，内嵌类型就是其中一个重要的功能
 package main
 
 import (
@@ -51,13 +52,17 @@ func main() {
 		},
 		Salary: 10000,
 	}
-	fmt.Println(e.Person.Name())
+	// 在 Go 语言规范中 e.Name() 被称为：promoted method
+	// 与继承的关键区别在于：调用 e.Name() 时，方法接收者是"e.Person"，而不是"e"
 	fmt.Println(e.Name()) // 等价于 e.Person.Name()
+	fmt.Println(e.Person.Name())
 
 	// 等价于 e.Person.SetAddress(...)
 	e.SetAddress(Address{City: "Beijing", Addr: "xxxxxx"})
-	fmt.Println(e.Person.address)
+
+	// 在 Go 语言规范中 e.address 被称为：promoted field
 	fmt.Println(e.address)
+	fmt.Println(e.Person.address)
 
 	fmt.Println("===============")
 	inspectMethod(e)

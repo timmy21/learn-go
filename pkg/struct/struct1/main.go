@@ -57,10 +57,14 @@ func main() {
 	}
 	pt := &p
 	fmt.Println(p.Name())
-	fmt.Println(pt.Name()) // 等价于: (*ptr).Name()
+	fmt.Println(pt.Name())      // 等价于: (*ptr).Name()
+	fmt.Println(Person.Name(p)) // 不会使用这种方式
 
-	p.SetAddress(Address{City: "Beijing", Addr: "xxxxxx"}) // 等价于: (&p).SetAddress(...)
-	pt.SetAddress(Address{City: "Beijing", Addr: "xxxxxx"})
+	newAddr := Address{City: "Beijing", Addr: "xxxxxx"}
+	p.SetAddress(newAddr) // 等价于: (&p).SetAddress(...)
+	pt.SetAddress(newAddr)
+	// (*Person).SetAddress(p, newAddr) // 无法编译
+	(*Person).SetAddress(pt, newAddr)
 	fmt.Println(p.address)
 	fmt.Println(pt.address)
 
