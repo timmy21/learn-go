@@ -12,23 +12,23 @@ import (
 	"github.com/pkg/errors"
 )
 
-type Client struct {
+type HttpClient struct {
 	client *http.Client
 	target *url.URL
 }
 
-func NewClient(endpoint string) (*Client, error) {
+func NewHttpClient(endpoint string) (*HttpClient, error) {
 	u, err := url.Parse(endpoint)
 	if err != nil {
 		return nil, errors.WithStack(err)
 	}
-	return &Client{
+	return &HttpClient{
 		client: &http.Client{},
 		target: u,
 	}, nil
 }
 
-func (c *Client) Set(ctx context.Context, key string, value []byte) error {
+func (c *HttpClient) Set(ctx context.Context, key string, value []byte) error {
 	b, err := json.Marshal(struct {
 		Key   string `json:"key"`
 		Value Value  `json:"value"`
@@ -68,7 +68,7 @@ func (c *Client) Set(ctx context.Context, key string, value []byte) error {
 	return errors.New(e.Err)
 }
 
-func (c *Client) Get(ctx context.Context, key string) ([]byte, error) {
+func (c *HttpClient) Get(ctx context.Context, key string) ([]byte, error) {
 	u := *c.target
 	u.Path = path.Join(u.Path, "/api/get")
 	u.RawQuery = url.Values{"key": []string{key}}.Encode()

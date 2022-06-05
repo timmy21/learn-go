@@ -17,7 +17,7 @@ import (
 )
 
 // 当依赖外部 http 服务时，通过下面方式模拟一个 http 测试服务。
-func newTestServer() *httptest.Server {
+func newHttpTestServer() *httptest.Server {
 	r := chi.NewRouter()
 	r.Get("/api/get", func(w http.ResponseWriter, r *http.Request) {
 		hp := kvstore.NewHelper(w, r, zap.L())
@@ -47,21 +47,21 @@ func newTestServer() *httptest.Server {
 	return httptest.NewServer(r)
 }
 
-func TestClient_Set(t *testing.T) {
-	server := newTestServer()
+func TestHttpClient_Set(t *testing.T) {
+	server := newHttpTestServer()
 	defer server.Close()
 
-	client, err := kvstore.NewClient(server.URL)
+	client, err := kvstore.NewHttpClient(server.URL)
 	require.NoError(t, err)
 	err = client.Set(context.Background(), "k1", []byte("v1"))
 	require.NoError(t, err)
 }
 
-func TestClient_Get(t *testing.T) {
-	server := newTestServer()
+func TestHttpClient_Get(t *testing.T) {
+	server := newHttpTestServer()
 	defer server.Close()
 
-	client, err := kvstore.NewClient(server.URL)
+	client, err := kvstore.NewHttpClient(server.URL)
 	require.NoError(t, err)
 
 	t.Run("ok", func(t *testing.T) {
