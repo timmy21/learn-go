@@ -9,7 +9,7 @@ import (
 const maxUint64 = 1<<64 - 1
 
 // 自定义错误类型，需要实现 error 接口
-// https://github.com/golang/go/blob/master/src/builtin/builtin.go#L280
+// https://github.com/golang/go/blob/go1.18.3/src/builtin/builtin.go#L270
 type error interface {
 	Error() string
 }

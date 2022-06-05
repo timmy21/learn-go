@@ -3,7 +3,7 @@ package main
 
 import "fmt"
 
-// https://github.com/golang/go/blob/master/src/runtime/slice.go#L15
+// https://github.com/golang/go/blob/go1.18.3/src/runtime/slice.go#L15
 // slice 运行时数据结构如下:
 // type slice struct {
 // 	array unsafe.Pointer // 指向底层数组
@@ -17,7 +17,7 @@ import "fmt"
 //   3. 否则，如果旧切片的容量大于等于256，则最终容量（newcap）从旧容量（old.cap）开始循环逐步增加容量，
 //       即（newcap += (newcap + 3*threshold) / 4）直到最终容量（newcap）大于等于新申请的容量(cap)，即（newcap >= cap）
 //   4. 如果最终容量（cap）计算值溢出，则最终容量（cap）就是新申请容量（cap）
-// 不同Go版本扩容规则可能会发生变化，具体请查看：https://github.com/golang/go/blob/master/src/runtime/slice.go#L178
+// 不同Go版本扩容规则可能会发生变化，具体请查看：https://github.com/golang/go/blob/go1.18.3/src/runtime/slice.go#L166
 func concat(a, b []int) []int {
 	// slice 作为参数传递时，拷贝的是 "slice header"（大小为 3-word，64位机器是24字节），而不会拷贝底层的数组。
 	return append(a, b...)
