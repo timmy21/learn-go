@@ -25,8 +25,7 @@ func toUpper(s string) string {
 	}
 	// 不管是 []byte(string) 还是 string([]byte) 都会发生底层字节数组的拷贝
 	// 因为 []byte 是可变的，而 string 是不可变的。所以他们不能共享底层字节数组
-	// 但是在某些场景下，Go 编译器做些优化。
-	//   比如：上面的 "for i, b := range []byte(s)" 就不会进行底层字节数组的拷贝
+	// 但是在某些场景下，Go 编译器做些优化。比如：上面的 "for i, b := range []byte(s)" 就不会进行底层字节数组的拷贝
 	return string(r)
 }
 

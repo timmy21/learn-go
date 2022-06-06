@@ -5,6 +5,8 @@ import (
 	"encoding/json"
 	"net/http"
 
+	"github.com/go-chi/chi/v5"
+	"github.com/go-chi/chi/v5/middleware"
 	"github.com/gorilla/schema"
 )
 
@@ -32,6 +34,22 @@ func (v *Value) UnmarshalJSON(b []byte) error {
 	}
 	*v = val
 	return nil
+}
+
+func NewMux(srv *Service) *chi.Mux {
+	r := chi.NewRouter()
+
+	r.Use(
+		middleware.Logger,
+		middleware.Recoverer,
+		middleware.RealIP,
+	)
+	r.Mount("/debug", middleware.Profiler())
+	r.Route("/api", func(r chi.Router) {
+		r.Get("/get", srv.HttpGet)
+		r.Put("/set", srv.HttpSet)
+	})
+	return r
 }
 
 func (s *Service) HttpGet(w http.ResponseWriter, r *http.Request) {
