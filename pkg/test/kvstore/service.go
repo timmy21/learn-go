@@ -4,6 +4,8 @@ import (
 	"context"
 
 	"go.uber.org/zap"
+
+	"github.com/timmy21/learn-go/pkg/test/kvstore/kvstorepb"
 )
 
 type Backend interface {
@@ -12,6 +14,8 @@ type Backend interface {
 }
 
 type Service struct {
+	kvstorepb.UnimplementedKVStoreServer
+
 	lg      *zap.Logger
 	backend Backend
 }

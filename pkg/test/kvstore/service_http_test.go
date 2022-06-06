@@ -15,6 +15,9 @@ import (
 )
 
 // 服务提供方使用下面方式编写 http 测试
+// 测试一个服务处理器，需要提供 *http.Request 对象和 http.ResponseWriter 接口。
+//   1. httptest.NewRequest() 用于生成一个 *http.Request 对象
+//   2. httptest.NewRecorder() 返回一个实现了 http.ResponseWriter 接口的 *httptest.ResponseRecorder 对象，用于记录处理器对 http.ResponseWriter 的修改
 func TestService_HttpGet(t *testing.T) {
 	backend := NewMemBackend()
 	backend.Set(context.Background(), "k1", []byte("v1"))

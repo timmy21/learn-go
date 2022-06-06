@@ -1,0 +1,21 @@
+syntax = "proto3";
+
+option go_package = "github.com/timmy21/learn-go/pkg/test/kvstore/kvstorepb";
+
+package kvstore;
+
+import "google/protobuf/empty.proto";
+
+service KVStore {
+    rpc Get(Key) returns (Item) {};
+    rpc Set(Item) returns (google.protobuf.Empty) {};
+}
+
+message Key {
+    string name = 1;
+}
+
+message Item {
+    string key = 1;
+    bytes value = 2;
+}
