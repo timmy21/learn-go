@@ -10,6 +10,7 @@ import (
 	"github.com/timmy21/learn-go/pkg/test/kvstore/kvstorepb"
 )
 
+// 对比 grpc 和 http，可以很容易发现 gpc 实现更加简单，客户端集成更加方便。
 func (s *Service) Get(ctx context.Context, key *kvstorepb.Key) (*kvstorepb.Item, error) {
 	value, err := s.backend.Get(ctx, key.Name)
 	switch {
