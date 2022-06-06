@@ -38,4 +38,12 @@ func TestService_Get(t *testing.T) {
 }
 
 func TestService_Set(t *testing.T) {
+	backend := NewMemBackend()
+	srv := NewService(backend, zap.L())
+	_, err := srv.Set(context.Background(), &kvstorepb.Item{Key: "k1", Value: []byte("v1")})
+	require.NoError(t, err)
+
+	v, err := backend.Get(context.Background(), "k1")
+	require.NoError(t, err)
+	assert.Equal(t, []byte("v1"), v)
 }

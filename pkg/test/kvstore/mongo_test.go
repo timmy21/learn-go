@@ -11,9 +11,9 @@ import (
 	. "github.com/timmy21/learn-go/pkg/test/testutils"
 )
 
-// 对于外部数据库都可以采用类似的方式进行测试。
+// 对于外部数据库推荐采用类似下面的方式进行测试。
 //   1. 创建一个测试数据库
-//   2. 初始化相关的表结构（mongo不需要）
+//   2. 初始化相关的表结构（注：mongo不需要, 关系型数据库需要）
 //   3. 使用测试数据库进行测试
 //   4. 清理测试数据库
 func TestMongoBackend(t *testing.T) {

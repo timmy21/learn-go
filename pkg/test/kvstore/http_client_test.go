@@ -16,8 +16,7 @@ import (
 	"github.com/timmy21/learn-go/pkg/test/kvstore"
 )
 
-// 当依赖外部 http 服务时，通过下面方式模拟一个 http 测试服务。
-// httptest.NewServer() 返回一个测试服务器，监听本地回环地址上的一个可用随机端口。
+// 当依赖外部 http 服务时，使用 httptest.NewServer() 返回一个测试服务器，它监听在本地回环地址上的一个可用随机端口。
 func newHttpTestServer() *httptest.Server {
 	r := chi.NewRouter()
 	r.Get("/api/get", func(w http.ResponseWriter, r *http.Request) {

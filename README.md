@@ -10,10 +10,10 @@
 * [工具链](pkg/toolchain/README.md)
 * [错误处理](pkg/error/README.md)
 * [接口](pkg/interface/README.md)
+* [测试](pkg/test/README.md)
 * [并发](pkg/concurrency/README.md)
 * [反射](pkg/reflect/README.md)
 * [泛型](pkg/generic/README.md)
-* [测试](pkg/test/README.md)
 * [性能分析](pkg/pprof/README.md)
 
 ## 推荐阅读
