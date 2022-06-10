@@ -19,15 +19,17 @@ func sum2(nums []int) int {
 	var s int
 
 	// 内部实现大致等价于下面语句，
-	var index int
-	var value int
-	range_temp := nums // 待迭代的值会发生一次拷贝
-	len_temp := len(range_temp)
-	for index = 0; index < len_temp; index++ {
-		value = range_temp[index]
+	{
+		var index int
+		var value int
+		range_temp := nums // 待迭代的值会发生一次拷贝
+		len_temp := len(range_temp)
+		for index = 0; index < len_temp; index++ {
+			value = range_temp[index]
 
-		// 原始循环中的语句
-		s += value
+			// 原始循环中的语句
+			s += value
+		}
 	}
 	return s
 }
@@ -37,7 +39,9 @@ func sum3(nums []int) int {
 
 	// 通过 sum2 描述可以得出，其实在整个循环中使用的是同一个 v 变量
 	// 这通常会被认为是一个 Go 语言的陷阱，就算知道这个陷阱并且经验丰富，但依然可能犯错。
-	// 这个陷阱还有一种场景情况是：在循环体内，通过闭包捕获值变量。
+	// 这个陷阱的场景两种情况：
+	//   1. 取元素的地址，循环体外使用
+	//   2. 通过闭包捕获元素，循环体外使用
 	var copyed []*int
 	for _, v := range nums {
 		copyed = append(copyed, &v)
@@ -48,7 +52,22 @@ func sum3(nums []int) int {
 	return s
 }
 
-func sum4(nums map[string]int) int {
+func sum4(nums []int) int {
+	var s int
+
+	var fns []func()
+	for _, v := range nums {
+		fns = append(fns, func() {
+			s += v
+		})
+	}
+	for _, fn := range fns {
+		fn()
+	}
+	return s
+}
+
+func sum5(nums map[string]int) int {
 	var s int
 	// 在遍历 map 时，可以添加、删除 key。添加的 key 可能会在出现在接下来的迭代中，也可能不出现。
 	for k, v := range nums {
@@ -60,7 +79,7 @@ func sum4(nums map[string]int) int {
 	return s
 }
 
-func sum5(nums <-chan int) int {
+func sum6(nums <-chan int) int {
 	var s int
 	for v := range nums {
 		s += v
@@ -72,7 +91,9 @@ func main() {
 	fmt.Println(sum1([]int{1, 2, 3, 4, 5})) // Output: 15
 	fmt.Println(sum2([]int{1, 2, 3, 4, 5})) // Output: 15
 	fmt.Println(sum3([]int{1, 2, 3, 4, 5})) // Output: 25
+	fmt.Println(sum4([]int{1, 2, 3, 4, 5})) // Output: 25
 
+	fmt.Println("============")
 	m := map[string]int{
 		"zero":  0,
 		"one":   1,
@@ -81,7 +102,7 @@ func main() {
 		"four":  4,
 		"five":  5,
 	}
-	fmt.Println(sum4(m))
+	fmt.Println(sum5(m))
 	fmt.Println(m)
 
 	c := make(chan int, 5)
@@ -89,5 +110,5 @@ func main() {
 		c <- i
 	}
 	close(c)
-	fmt.Println(sum5(c))
+	fmt.Println(sum6(c))
 }
