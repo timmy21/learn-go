@@ -27,7 +27,7 @@ func Min[T Ordered](s []T) T {
 
 // 下面等效于：Max[T interface{~int | ~float32 | ~float64}]
 func Max[T ~int | ~float32 | ~float64](s []T) T {
-	r := s[0] // 如果 s 为空，会产生
+	r := s[0] // 如果 s 为空，会产生 panic
 	for _, v := range s[1:] {
 		if v > r {
 			r = v
@@ -36,14 +36,14 @@ func Max[T ~int | ~float32 | ~float64](s []T) T {
 	return r
 }
 
-// 接口 ABInt 的类型集合可以认为是三个接口(Integer, A, B)类型集合的交集
-type ABInt interface {
+// 接口 ABInteger 的类型集合可以认为是三个接口(Integer, A, B)类型集合的交集
+type ABInteger interface {
 	~int | ~int8 | ~int16 | ~int32 | ~int64
 	A()
 	B()
 }
 
-// Integer接口类型集合：所有有符合整数，或者底层类型是有符合整数的类型
+// Integer接口类型集合：所有有符号整数，或者底层类型是有符号整数的类型
 type Integer interface {
 	~int | ~int8 | ~int16 | ~int32 | ~int64
 }

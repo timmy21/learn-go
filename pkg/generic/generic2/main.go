@@ -79,7 +79,7 @@ func main() {
 	defer db.Close()
 
 	sqlStmt := `
-	create table person (id integer not null primary key, name text, city text, addr text);
+	create table person(id integer not null primary key, name text, city text, addr text);
 	`
 	_, err = db.Exec(sqlStmt)
 	if err != nil {
