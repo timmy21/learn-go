@@ -9,6 +9,16 @@ import (
 	_ "github.com/mattn/go-sqlite3"
 )
 
+type ColScanSet[T any] []ColScan[T]
+
+func (c ColScanSet[T]) Fields() []string {
+	fields := make([]string, len(c))
+	for i, item := range c {
+		fields[i] = item.Col
+	}
+	return fields
+}
+
 type ColScan[T any] struct {
 	Col  string
 	Scan func(item *T) any
@@ -18,7 +28,7 @@ type ColScan[T any] struct {
 // 这是一个 sql.Rows 的一个封装，用于将查询数据库返回的字段值绑定到结构体对象上。
 type StructRows[T any] struct {
 	*sql.Rows
-	ColScans []ColScan[T]
+	ColScanSet[T]
 }
 
 func (r *StructRows[T]) ScanStruct(item *T) error {
@@ -26,8 +36,8 @@ func (r *StructRows[T]) ScanStruct(item *T) error {
 		idx int
 		fn  func(*T, any) error
 	}
-	dests := make([]any, 0, len(r.ColScans))
-	for i, cs := range r.ColScans {
+	dests := make([]any, 0, len(r.ColScanSet))
+	for i, cs := range r.ColScanSet {
 		dests = append(dests, cs.Scan(item))
 		if cs.Bind != nil {
 			binds = append(binds, struct {
@@ -81,7 +91,7 @@ func main() {
 		log.Fatal(err)
 	}
 
-	{
+	func() {
 		// 简单迭代
 		rows, err := db.Query("select name, city, addr from person")
 		if err != nil {
@@ -100,10 +110,10 @@ func main() {
 		if err != nil {
 			log.Fatal(err)
 		}
-	}
-	{
+	}()
+	func() {
 		// 结构体迭代
-		colScans := []ColScan[person]{
+		colScans := ColScanSet[person]{
 			{
 				Col: "name",
 				Scan: func(item *person) any {
@@ -127,18 +137,14 @@ func main() {
 				},
 			},
 		}
-		var fields []string
-		for _, cs := range colScans {
-			fields = append(fields, cs.Col)
-		}
-		rows, err := db.Query("select " + strings.Join(fields, ",") + " from person")
+		rows, err := db.Query("select " + strings.Join(colScans.Fields(), ",") + " from person")
 		if err != nil {
 			log.Fatal(err)
 		}
 		// 结构体泛型当前不支持类型推断
 		sRows := StructRows[person]{
-			Rows:     rows,
-			ColScans: colScans,
+			Rows:       rows,
+			ColScanSet: colScans,
 		}
 		defer sRows.Close()
 		for sRows.Next() {
@@ -153,5 +159,5 @@ func main() {
 		if err != nil {
 			log.Fatal(err)
 		}
-	}
+	}()
 }

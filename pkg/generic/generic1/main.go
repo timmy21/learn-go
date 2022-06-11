@@ -43,14 +43,17 @@ type ABInt interface {
 	B()
 }
 
+// Integer接口类型集合：所有有符合整数，或者底层类型是有符合整数的类型
 type Integer interface {
 	~int | ~int8 | ~int16 | ~int32 | ~int64
 }
 
+// A接口类型集合：所有实现了 A() 方法的类型
 type A interface {
 	A()
 }
 
+// B接口类型集合：所有实现了 B() 方法的类型
 type B interface {
 	B()
 }
