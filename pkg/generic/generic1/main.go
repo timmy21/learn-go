@@ -16,7 +16,7 @@ type Ordered interface {
 
 // 泛型函数包含“类型参数”，每一个类型参数都有一个“类型约束”，类型约束必须是接口
 func Min[T Ordered](s []T) T {
-	r := s[0] // panics if slice is empty
+	r := s[0] // 如果 s 为空，会产生 panic
 	for _, v := range s[1:] {
 		if v < r {
 			r = v
@@ -27,7 +27,7 @@ func Min[T Ordered](s []T) T {
 
 // 下面等效于：Max[T interface{~int | ~float32 | ~float64}]
 func Max[T ~int | ~float32 | ~float64](s []T) T {
-	r := s[0] // panics if slice is empty
+	r := s[0] // 如果 s 为空，会产生
 	for _, v := range s[1:] {
 		if v > r {
 			r = v

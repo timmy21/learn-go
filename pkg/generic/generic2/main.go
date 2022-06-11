@@ -109,6 +109,10 @@ func main() {
 				Scan: func(item *person) any {
 					return &item.name
 				},
+				Bind: func(item *person, field any) error {
+					item.name = strings.ToUpper(*field.(*string))
+					return nil
+				},
 			},
 			{
 				Col: "city",
@@ -138,8 +142,8 @@ func main() {
 		}
 		defer sRows.Close()
 		for sRows.Next() {
-			p := new(person)
-			err := sRows.ScanStruct(p)
+			var p person
+			err := sRows.ScanStruct(&p)
 			if err != nil {
 				log.Fatal(err)
 			}

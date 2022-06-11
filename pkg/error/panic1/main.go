@@ -34,7 +34,7 @@ func (t TagMaker) New(vals ...string) map[string]string {
 	return m
 }
 
-// 在函数/库的内部可能会使用 panic，但对外 API 使用 error 返回值
+// 在函数/库的内部在特定场景，可以谨慎的选择使用 panic，但对外 API 使用 error 返回值
 func index(data any, idx any) (val any, err error) {
 	defer func() {
 		r := recover()

@@ -4,3 +4,4 @@
 * [Testable Examples in Go](https://go.dev/blog/examples)
 * [Tutorial: Getting started with fuzzing](https://go.dev/doc/tutorial/fuzz)
 * [Go Fuzzing](https://go.dev/doc/fuzz/)
+* [Testing flags](https://pkg.go.dev/cmd/go#hdr-Testing_flags)

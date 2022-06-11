@@ -45,6 +45,8 @@ func TestMemBackend_Get(t *testing.T) {
 	}
 }
 
+// 对于同一个被测试包，go test命令会串行执行各个功能测试。
+// 为了加快测试速度，go test会并发的对多个被测试包进行功能测试。
 func TestMemBackend_Set(t *testing.T) {
 	backend := NewMemBackend()
 
@@ -76,7 +78,7 @@ func TestMemBackend_Set(t *testing.T) {
 	}
 }
 
-// 性能测试
+// 性能测试，为了保证性能测试的准确性，性能测试是串行进行的。下一个包的性能测试会等到上一个包的性能测试结束后才开始。
 func BenchmarkMemBackend_Set(b *testing.B) {
 	backend := NewMemBackend()
 	for i := 0; i < b.N; i++ {

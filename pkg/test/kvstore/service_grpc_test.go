@@ -15,6 +15,7 @@ import (
 	"github.com/timmy21/learn-go/pkg/test/kvstore/kvstorepb"
 )
 
+// 对于一些复杂结构的比较，推荐使用 go-cmp 包，protobuf 中的 protocmp 就是使用 go-cmp 的。
 func TestService_Get(t *testing.T) {
 	backend := NewMemBackend()
 	backend.Set(context.Background(), "k1", []byte("v1"))
