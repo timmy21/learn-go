@@ -1,3 +1,5 @@
+// Go 调度器(CPM)本质是把大量的 goroutine 调度到少量的内核线程上去执行，并利用多核并行处理，实现并发。
+// https://github.com/golang/go/blob/master/src/runtime/stack.go#L75
 package main
 
 import (
@@ -7,6 +9,7 @@ import (
 )
 
 func Number(n int) <-chan int {
+	// 不带缓冲的 channel
 	ch := make(chan int)
 	go func() {
 		for i := 0; i < n; i++ {
@@ -35,6 +38,7 @@ func Partition(in <-chan int, n int) []<-chan int {
 }
 
 func Merge(ins ...<-chan int) <-chan int {
+	// 带缓冲的 channel
 	out := make(chan int, 5)
 	var wg sync.WaitGroup
 	for _, in := range ins {
