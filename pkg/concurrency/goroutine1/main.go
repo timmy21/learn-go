@@ -1,4 +1,5 @@
 // Go 调度器(CPM)本质是把大量的 goroutine 调度到少量的内核线程上去执行，并利用多核并行处理，实现并发。
+// 可以使用 GOMAXPROCS 限定 P 的数量，默认为：runtime.NumCPU
 // https://github.com/golang/go/blob/master/src/runtime/stack.go#L75
 package main
 
