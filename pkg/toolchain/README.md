@@ -5,7 +5,7 @@
 * go test: 用于执行单元测试和性能测试。
 * go mod init: 在当前目录生成 go.mod 文件。
 * go mod tidy: 通过分析当前项目的源码文件，添加缺失的依赖包，或者删除不再需要的依赖包。
-* go get: 用于增加、更新 go.mod 需要的依赖包。实际开发中 `go mod init` 更常用。
+* go get: 用于增加、更新 go.mod 需要的依赖包。实际开发中 `go mod tidy` 更常用。
 * go install: 用于安装第三方 Go 程序到 `GOBIN` 目录下。
 
 使用 "go help <command>" 查看命令的详细信息

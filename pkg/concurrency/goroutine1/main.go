@@ -1,6 +1,8 @@
 // Go 调度器(CPM)本质是把大量的 goroutine 调度到少量的内核线程上去执行，并利用多核并行处理，实现并发。
 // 可以使用 GOMAXPROCS 限定 P 的数量，默认为：runtime.NumCPU
+// goroutine 初始栈大小为 2KB，并在不够时进行扩容。
 // https://github.com/golang/go/blob/master/src/runtime/stack.go#L75
+// https://pkg.go.dev/runtime/debug#SetMaxStack
 package main
 
 import (
@@ -69,6 +71,7 @@ func main() {
 		for num := range ch {
 			sum += num
 		}
+		// 多次 close 会导致 panic
 		close(done)
 	}()
 
