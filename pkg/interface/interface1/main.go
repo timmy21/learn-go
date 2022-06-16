@@ -53,7 +53,7 @@ func (mi MyInt) String() string {
 	return fmt.Sprintf("MyInt(%d)", mi)
 }
 
-// 在Go中，接口实现时隐式的（非接口类型方法集包括接口方法集），不需要使用类似 implements 这样的关键字。这种方式也被称为：“duck typing”
+// 在Go中，接口实现是隐式的（非接口类型方法集包括接口方法集），不需要使用类似 implements 这样的关键字。这种方式也被称为：“duck typing”
 func hello(v fmt.Stringer) string {
 	return "Hello " + v.String() + "!"
 }

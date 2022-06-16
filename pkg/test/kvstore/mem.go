@@ -44,6 +44,8 @@ func (m *MemBackend) Set(_ context.Context, key string, value []byte) error {
 }
 
 func (m *MemBackend) Get(_ context.Context, key string) ([]byte, error) {
+	m.mu.Lock()
+	defer m.mu.Unlock()
 	v, ok := m.data[key]
 	if !ok {
 		return nil, errors.WithStack(&NotFoundError{key: key})
