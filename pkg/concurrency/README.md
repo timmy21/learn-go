@@ -7,3 +7,8 @@
 * [Advanced Go Concurrency Patterns](https://go.dev/blog/io2013-talk-concurrency)
 * [The Go Memory Model](https://go.dev/ref/mem)
 * [Data Race Detector](https://go.dev/doc/articles/race_detector)
+* [Scheduling In Go : Part I - OS Scheduler](https://www.ardanlabs.com/blog/2018/08/scheduling-in-go-part1.html)
+* [Scheduling In Go : Part II - Go Scheduler](https://www.ardanlabs.com/blog/2018/08/scheduling-in-go-part2.html)
+* [Scheduling In Go : Part III - Concurrency](https://www.ardanlabs.com/blog/2018/12/scheduling-in-go-part3.html)
+* [Go's work-stealing scheduler](https://rakyll.org/scheduler/)
+* [Scalable Go Scheduler Design Doc](https://golang.org/s/go11sched)
