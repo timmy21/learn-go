@@ -12,3 +12,5 @@
 * [Scheduling In Go : Part III - Concurrency](https://www.ardanlabs.com/blog/2018/12/scheduling-in-go-part3.html)
 * [Go's work-stealing scheduler](https://rakyll.org/scheduler/)
 * [Scalable Go Scheduler Design Doc](https://golang.org/s/go11sched)
+* [GopherCon 2018: Kavya Joshi - The Scheduler Saga - youtube](https://www.youtube.com/watch?v=YHRO5WQGh0k)
+* [GopherCon 2018: Kavya Joshi - The Scheduler Saga - Slide](https://speakerdeck.com/kavya719/the-scheduler-saga)

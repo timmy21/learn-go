@@ -2,4 +2,5 @@
 
 ## 进一步阅读
 
+* [Go Data Structures: Interfaces](https://research.swtch.com/interfaces)
 * [Why is there no type inheritance?](https://go.dev/doc/faq#inheritance)

@@ -10,19 +10,19 @@ import (
 
 type Echo1 struct {
 	stopCh chan struct{}
-	exited chan struct{}
+	exitCh chan struct{}
 }
 
 func NewEcho1() *Echo1 {
 	return &Echo1{
 		stopCh: make(chan struct{}),
-		exited: make(chan struct{}),
+		exitCh: make(chan struct{}),
 	}
 }
 
 func (e *Echo1) Start() {
 	go func() {
-		defer close(e.exited)
+		defer close(e.exitCh)
 		ticker := time.NewTicker(100 * time.Millisecond)
 		defer ticker.Stop()
 		var i int
@@ -42,13 +42,13 @@ func (e *Echo1) Start() {
 func (e *Echo1) Stop() {
 	// 确保 Stop 仅执行一次，多次 close 会导致 panic
 	close(e.stopCh)
-	<-e.exited
+	<-e.exitCh
 }
 
 type Echo2 struct {
 	ctx    context.Context
 	cancel context.CancelFunc
-	exited chan struct{}
+	exitCh chan struct{}
 }
 
 func NewEcho2() *Echo2 {
@@ -56,13 +56,13 @@ func NewEcho2() *Echo2 {
 	return &Echo2{
 		ctx:    ctx,
 		cancel: cancel,
-		exited: make(chan struct{}),
+		exitCh: make(chan struct{}),
 	}
 }
 
 func (e *Echo2) Start() {
 	go func() {
-		defer close(e.exited)
+		defer close(e.exitCh)
 		ticker := time.NewTicker(100 * time.Millisecond)
 		defer ticker.Stop()
 		var i int
@@ -82,25 +82,25 @@ func (e *Echo2) Start() {
 func (e *Echo2) Stop() {
 	// Stop 可以执行多次
 	e.cancel()
-	<-e.exited
+	<-e.exitCh
 }
 
 type Echo3 struct {
 	stopCh chan struct{}
-	exited chan struct{}
+	exitCh chan struct{}
 	once   sync.Once
 }
 
 func NewEcho3() *Echo3 {
 	return &Echo3{
 		stopCh: make(chan struct{}),
-		exited: make(chan struct{}),
+		exitCh: make(chan struct{}),
 	}
 }
 
 func (e *Echo3) Start() {
 	go func() {
-		defer close(e.exited)
+		defer close(e.exitCh)
 		ticker := time.NewTicker(100 * time.Millisecond)
 		defer ticker.Stop()
 		var i int
@@ -122,7 +122,7 @@ func (e *Echo3) Stop() {
 	e.once.Do(func() {
 		close(e.stopCh)
 	})
-	<-e.exited
+	<-e.exitCh
 }
 
 func main() {
