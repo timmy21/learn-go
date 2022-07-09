@@ -8,6 +8,9 @@ import (
 	_ "net/http/pprof"
 	"time"
 
+	grpc_middleware "github.com/grpc-ecosystem/go-grpc-middleware"
+	grpc_zap "github.com/grpc-ecosystem/go-grpc-middleware/logging/zap"
+	grpc_recovery "github.com/grpc-ecosystem/go-grpc-middleware/recovery"
 	"github.com/pkg/errors"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
@@ -79,7 +82,12 @@ var serverCmd = &cobra.Command{
 			if err != nil {
 				return errors.WithStack(err)
 			}
-			server := grpc.NewServer()
+			server := grpc.NewServer(grpc.UnaryInterceptor(grpc_middleware.ChainUnaryServer(
+				grpc_zap.UnaryServerInterceptor(logger, grpc_zap.WithDecider(func(_ string, err error) bool {
+					return err != nil
+				})),
+				grpc_recovery.UnaryServerInterceptor(),
+			)))
 			kvstorepb.RegisterKVStoreServer(server, srv)
 
 			goGroup.Go(func() error {

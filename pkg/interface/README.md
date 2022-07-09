@@ -4,3 +4,4 @@
 
 * [Go Data Structures: Interfaces](https://research.swtch.com/interfaces)
 * [Why is there no type inheritance?](https://go.dev/doc/faq#inheritance)
+* [go-internals: 接口](https://github.com/go-internals-cn/go-internals/blob/master/chapter2_interfaces/README.md)

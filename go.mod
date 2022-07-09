@@ -6,6 +6,7 @@ require (
 	github.com/go-chi/chi/v5 v5.0.7
 	github.com/google/go-cmp v0.5.8
 	github.com/gorilla/schema v1.2.0
+	github.com/grpc-ecosystem/go-grpc-middleware v1.3.0
 	github.com/mattn/go-sqlite3 v1.14.13
 	github.com/pkg/errors v0.9.1
 	github.com/spf13/cobra v1.4.0

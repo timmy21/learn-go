@@ -4,6 +4,7 @@ import (
 	"context"
 
 	"github.com/pkg/errors"
+	"google.golang.org/genproto/googleapis/rpc/errdetails"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
@@ -24,6 +25,15 @@ func NewGrpcClient(cc grpc.ClientConnInterface) (*GrpcClient, error) {
 
 func (c *GrpcClient) Set(ctx context.Context, key string, value []byte) error {
 	_, err := c.client.Set(ctx, &kvstorepb.Item{Key: key, Value: value})
+	st := status.Convert(err)
+	if st.Code() == codes.InvalidArgument {
+		for _, d := range st.Details() {
+			switch info := d.(type) {
+			case *errdetails.BadRequest_FieldViolation:
+				return errors.Errorf("invalid field(%s): %s", info.Field, info.Description)
+			}
+		}
+	}
 	return errors.WithStack(err)
 }
 
@@ -32,7 +42,7 @@ func (c *GrpcClient) Get(ctx context.Context, key string) ([]byte, error) {
 	if err == nil {
 		return item.Value, nil
 	}
-	st, _ := status.FromError(err)
+	st := status.Convert(err)
 	if st.Code() == codes.NotFound {
 		return nil, errors.WithStack(&NotFoundError{key: key})
 	}

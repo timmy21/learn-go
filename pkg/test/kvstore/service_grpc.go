@@ -3,6 +3,7 @@ package kvstore
 import (
 	"context"
 
+	"google.golang.org/genproto/googleapis/rpc/errdetails"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
 	"google.golang.org/protobuf/types/known/emptypb"
@@ -23,6 +24,17 @@ func (s *Service) Get(ctx context.Context, key *kvstorepb.Key) (*kvstorepb.Item,
 	}
 }
 func (s *Service) Set(ctx context.Context, item *kvstorepb.Item) (*emptypb.Empty, error) {
+	if item.Key == "" {
+		st := status.New(codes.InvalidArgument, "item key is empty")
+		ds, err := st.WithDetails(&errdetails.BadRequest_FieldViolation{
+			Field:       "key",
+			Description: "item key is empty",
+		})
+		if err != nil {
+			return nil, st.Err()
+		}
+		return nil, ds.Err()
+	}
 	err := s.backend.Set(ctx, item.Key, item.Value)
 	if err != nil {
 		return nil, err
