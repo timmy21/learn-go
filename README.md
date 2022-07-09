@@ -15,6 +15,7 @@
 * [反射](pkg/reflect/README.md)
 * [泛型](pkg/generic/README.md)
 * [性能分析](pkg/pprof/README.md)
+* [Cgo](pkg/cgo/README.md)
 
 ## 推荐阅读
 

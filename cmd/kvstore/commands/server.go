@@ -6,9 +6,6 @@ import (
 	"net"
 	"net/http"
 	_ "net/http/pprof"
-	"os"
-	"os/signal"
-	"syscall"
 	"time"
 
 	"github.com/pkg/errors"
@@ -30,16 +27,7 @@ var serverCmd = &cobra.Command{
 	Use: "server",
 	RunE: func(cmd *cobra.Command, args []string) error {
 		logger, _ := zap.NewDevelopment()
-		ctx, cancel := context.WithCancel(cmd.Context())
-		go func() {
-			c := make(chan os.Signal, 1)
-			signal.Notify(c, syscall.SIGINT, syscall.SIGHUP, syscall.SIGTERM)
-			sig := <-c
-			logger.Info("received signal", zap.String("signal", sig.String()))
-			cancel()
-		}()
-
-		goGroup, rootCtx := errgroup.WithContext(ctx)
+		goGroup, rootCtx := errgroup.WithContext(cmd.Context())
 
 		backend := kvstore.NewMemBackend()
 		srv := kvstore.NewService(backend, logger)

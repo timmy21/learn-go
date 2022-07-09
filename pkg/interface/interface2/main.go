@@ -70,6 +70,13 @@ func inspectSyntaxError() {
 	sErr.Num = "y"
 	fmt.Println("err1:", err1)
 	fmt.Println("err2:", err2)
+
+	// 接口仅在赋值时拷贝对象，后续复制接口时仅拷贝"iface.data"指针，底层对象是同一个
+	func(err error) {
+		iErr := (*iface)(unsafe.Pointer(&err))
+		(*SyntaxError)(iErr.data).Num = "z"
+	}(err1)
+	fmt.Println("err1:", err1)
 }
 
 func main() {
