@@ -2,7 +2,14 @@
 // 可以使用 GOMAXPROCS 限定 P 的数量，默认为：runtime.NumCPU
 // goroutine 初始栈大小为 2KB，运行时会按照需要增长和收缩
 // https://github.com/golang/go/blob/go1.18.3/src/runtime/stack.go#L75
+
+// 虽然栈可以自动扩容，但如果超过maxstacksize，还是会报“stack overflow”异常。
+// 64位系统下栈的最大值1GB、32位系统是250MB
+// https://github.com/golang/go/blob/go1.18.3/src/runtime/proc.go#L152
 // https://pkg.go.dev/runtime/debug#SetMaxStack
+
+// 调度器最多可以创建 10000 个线程，但大部分都不会执行用户代码，可能是陷入系统调用。
+// https://github.com/golang/go/blob/go1.18.3/src/runtime/proc.go#L684
 package main
 
 import (

@@ -1,4 +1,4 @@
-// 永远不要在不知道 goroutine 合适终止，或者不知道如何终止的情况下，启动一个 goroutine。否则很可能会导致 goroutine 泄露，内存泄露。
+// 永远不要在不知道 goroutine 何时终止，或者不知道如何终止的情况下，启动一个 goroutine，否则很可能会导致 goroutine 泄露。
 package main
 
 import (
@@ -40,7 +40,7 @@ func (e *Echo1) Start() {
 }
 
 func (e *Echo1) Stop() {
-	// 确保 Stop 仅执行一次，多次 close 会导致 panic
+	// Stop 仅可以执行一次，多次关闭 chan 会产生 panic
 	close(e.stopCh)
 	<-e.exitCh
 }
