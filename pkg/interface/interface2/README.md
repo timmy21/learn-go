@@ -22,7 +22,9 @@ type itab struct {
 	_type *_type
 	hash  uint32 // copy of _type.hash. Used for type switches.
 	_     [4]byte
-	// 动态类型的对应方法列表
+	// 实体类型和接口相关的方法，实体类型的其他方法并不会出现在这里
+	// 存储的是第一个方法的函数指针，如果有更多的方法，在它之后的内存空间里继续存储。
+	// 这些方法是按照函数名称的字典序进行排列的。
 	fun   [1]uintptr // variable sized. fun[0]==0 means _type does not implement inter.
 }
 ```
