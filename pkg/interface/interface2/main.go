@@ -13,6 +13,11 @@ type iface struct {
 	data unsafe.Pointer
 }
 
+type itab struct {
+	ityp uintptr
+	typ  uintptr
+}
+
 func inpsectBytesBuffer() {
 	var r io.Reader
 	var w io.Writer
@@ -41,6 +46,20 @@ func inpsectBytesBuffer() {
 
 	ir := (*iface)(unsafe.Pointer(&r))
 	fmt.Println("r iface:", ir)
+
+	var any1 any
+	var any2 any
+	any1 = buf
+	any2 = rw1
+
+	iany1 := (*iface)(unsafe.Pointer(&any1))
+	fmt.Println("any1 eface:", iany1)
+
+	iany2 := (*iface)(unsafe.Pointer(&any2))
+	fmt.Println("any2 eface:", iany2)
+
+	itab := (*itab)(unsafe.Pointer(irw1.tab))
+	fmt.Println("rw1 itab:", itab)
 }
 
 type SyntaxError struct {
