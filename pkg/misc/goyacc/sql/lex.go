@@ -1,7 +1,7 @@
 package sql
 
 import (
-	"errors"
+	"fmt"
 	"strings"
 	"text/scanner"
 )
@@ -31,9 +31,9 @@ func (l *lex) Lex(lval *yySymType) int {
 		return 0
 	case scanner.Ident:
 		text := l.s.TokenText()
-		v, ok := isKeyword(text)
+		kw, ok := keywordMap[strings.ToUpper(text)]
 		if ok {
-			return v
+			return kw
 		}
 		lval.ident = text
 		return IDENT
@@ -43,12 +43,13 @@ func (l *lex) Lex(lval *yySymType) int {
 }
 
 func (l *lex) Error(e string) {
-	l.err = errors.New(e)
-}
-
-func isKeyword(text string) (int, bool) {
-	v, ok := keywordMap[strings.ToUpper(text)]
-	return v, ok
+	l.err = fmt.Errorf(
+		"Error at %q, pos %d:%d, %s",
+		l.s.TokenText(),
+		l.s.Position.Line,
+		l.s.Position.Offset+1,
+		e,
+	)
 }
 
 var keywordMap = map[string]int{
