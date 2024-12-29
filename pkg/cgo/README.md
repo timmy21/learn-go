@@ -5,3 +5,5 @@
 * [Go 静态编译 和 CGO](https://www.rectcircle.cn/posts/go-static-compile-and-cgo/)
 * [Go与C的桥梁：CGO入门剖析与实践](https://mp.weixin.qq.com/s/AMv5IVBPU2lAY_qUwskk4g)
 * [CGO内存模型](https://chai2010.cn/advanced-go-programming-book/ch2-cgo/ch2-07-memory.html) 
+* [chdb-go](https://github.com/chdb-io/chdb-go)
+* [动态链接详解-Golang](https://www.rectcircle.cn/posts/linux-dylib-detail-5-lang-go/)

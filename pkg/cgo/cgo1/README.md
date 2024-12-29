@@ -2,7 +2,7 @@
 ```bash
 go build -work -x main.go
 ```
-详细信息查看 build-dynamic.log
+详细信息查看 build-dynamic.log，可以查看$WORK目录下的中间文件
 
 ```bash
 $ ldd main

@@ -1,4 +1,5 @@
-## 默认构建
+## 构建
+在默认 CGO_ENABLED=1 情况下，进行构建
 ```bash
 $ go build main.go
 $ ldd main
@@ -41,8 +42,7 @@ $ ldd main
 	not a dynamic executable
 ```
 
-也可以使用CGO_ENABLED=0，使用纯Go版本的net包
-
+也可以设置CGO_ENABLED=0，这样编译器会使用纯Go版本的net包
 ```bash
 $ CGO_ENABLED=0 go build main.go
 $ ldd main
