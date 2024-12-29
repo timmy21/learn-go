@@ -6,9 +6,11 @@
 #pragma GCC diagnostic ignored "-Wunknown-pragmas"
 #pragma GCC diagnostic ignored "-Wpragmas"
 #pragma GCC diagnostic ignored "-Waddress-of-packed-member"
-extern void crosscall2(void (*fn)(void *), void *, int, __SIZE_TYPE__);
-extern __SIZE_TYPE__ _cgo_wait_runtime_init_done(void);
-extern void _cgo_release_context(__SIZE_TYPE__);
+#pragma GCC diagnostic ignored "-Wunknown-warning-option"
+#pragma GCC diagnostic ignored "-Wunaligned-access"
+extern void crosscall2(void (*fn)(void *), void *, int, size_t);
+extern size_t _cgo_wait_runtime_init_done(void);
+extern void _cgo_release_context(size_t);
 
 extern char* _cgo_topofstack(void);
 #define CGO_NO_SANITIZE_THREAD

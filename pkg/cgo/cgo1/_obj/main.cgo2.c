@@ -1,6 +1,6 @@
 
 #line 1 "cgo-builtin-prolog"
-#include <stddef.h> /* for ptrdiff_t and size_t below */
+#include <stddef.h>
 
 /* Define intgo when compiling with GCC.  */
 typedef ptrdiff_t intgo;
@@ -21,7 +21,7 @@ static size_t _GoStringLen(_GoString_ s) { return (size_t)s.n; }
 __attribute__ ((unused))
 static const char *_GoStringPtr(_GoString_ s) { return s.p; }
 
-#line 10 "/Users/timmy.yuan/code/netis/zedong/learn-go/pkg/cgo/cgo1/main.go"
+#line 10 "/opt/pkg/cgo/cgo1/main.go"
 int sum(int a, int b) { return a+b; }
 
 #line 1 "cgo-generated-wrapper"
@@ -56,6 +56,8 @@ extern char* _cgo_topofstack(void);
 #pragma GCC diagnostic ignored "-Wunknown-pragmas"
 #pragma GCC diagnostic ignored "-Wpragmas"
 #pragma GCC diagnostic ignored "-Waddress-of-packed-member"
+#pragma GCC diagnostic ignored "-Wunknown-warning-option"
+#pragma GCC diagnostic ignored "-Wunaligned-access"
 
 #include <errno.h>
 #include <string.h>
@@ -70,14 +72,14 @@ extern char* _cgo_topofstack(void);
 
 CGO_NO_SANITIZE_THREAD
 void
-_cgo_1266264a5758_Cfunc_sum(void *v)
+_cgo_ddeb1d1e2e06_Cfunc_sum(void *v)
 {
 	struct {
 		int p0;
 		int p1;
 		int r;
 		char __pad12[4];
-	} __attribute__((__packed__)) *_cgo_a = v;
+	} __attribute__((__packed__, __gcc_struct__)) *_cgo_a = v;
 	char *_cgo_stktop = _cgo_topofstack();
 	__typeof__(_cgo_a->r) _cgo_r;
 	_cgo_tsan_acquire();
