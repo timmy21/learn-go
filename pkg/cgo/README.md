@@ -1,5 +1,5 @@
 ## 进一步阅读
-
+* [cmd/cgo](https://pkg.go.dev/cmd/cgo)
 * [C? Go? Cgo!](https://go.dev/blog/cgo)
 * [cgo is not Go](https://dave.cheney.net/tag/cgo)
 * [Go 静态编译 和 CGO](https://www.rectcircle.cn/posts/go-static-compile-and-cgo/)

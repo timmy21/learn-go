@@ -7,7 +7,7 @@ package main
 
 //go:generate go tool cgo main.go
 
-//int sum(int a, int b) { return a+b; }
+// int sum(int a, int b) { return a+b; }
 import "C"
 
 func main() {

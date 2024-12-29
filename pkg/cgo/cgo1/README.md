@@ -23,3 +23,9 @@ go build -work -x -ldflags "-linkmode external -extldflags -static" main.go
 ldd main
 	not a dynamic executable
 ```
+
+上面构建命令可以省略 `-linkmode external`，因为如果用户层Go代码中使用了cgo代码，
+那么Go链接器将会自动选择外部链接机制。
+
+外部链接机制则是Go链接器将所有的.o都写入一个.o文件中，再将其交给外部链接器（比如gcc或者clang）
+去做最终的链接处理。
