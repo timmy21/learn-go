@@ -1,3 +1,10 @@
+## docker环境
+```bash
+$ docker run -it --rm -v .:/opt -w /opt golang:1.23-bullseye /bin/bash
+```
+在docker环境中测试 gcc 部分
+
+
 ## 进一步阅读
 * [cmd/cgo](https://pkg.go.dev/cmd/cgo)
 * [C? Go? Cgo!](https://go.dev/blog/cgo)
